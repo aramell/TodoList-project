@@ -3,13 +3,6 @@ import "./App.css";
 import { newId } from "./helpers";
 import { withStyles } from "@material-ui/core/styles";
 import { Container } from "@material-ui/core";
-/**
- * - Style this app using Material-UI: https://material-ui.com/
- * - Add the ability to remove an item from the list
- * - Add the ability to edit an item from the list
- * - Add the ability to mark an item as complete
- * - Add the ability to sort the items
- */
 
 function App({ classes }: any) {
   const ACTION_ADD_ITEM = "ADD_ITEM";
