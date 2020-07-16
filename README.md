@@ -1,5 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Setup
+1. Install Node: https://nodejs.org/en/download/
+2. Install yarn: https://classic.yarnpkg.com/en/docs/install/#mac-stable
+3. Install deps by running `yarn`
+
+
 ## Available Scripts
 
 In the project directory, you can run:
