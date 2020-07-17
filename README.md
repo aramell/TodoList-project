@@ -4,6 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 1. Install Node: https://nodejs.org/en/download/
 2. Install yarn: https://classic.yarnpkg.com/en/docs/install/#mac-stable
 3. Install deps by running `yarn`
+4. Start the app with `yarn start`
 
 
 ## Available Scripts
