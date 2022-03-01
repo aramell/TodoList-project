@@ -1,1 +1,31 @@
+.MuiPaper-elevation1 {
+  margin: auto;
+  max-width: 60%;
+  min-height: 10em;
+  padding-top: 4em;
+  padding-bottom: 3em;
+}
 
+h4 {
+  text-align: center;
+}
+
+.MuiFormGroup-root {
+  align-items: center;
+}
+
+li {
+  list-style-type: none;
+  display: flex;
+  flex-direction: inherit;
+  align-items: center;
+}
+.priority {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2em;
+  max-width: 4em;
+}
+.MuiButtonBase-root {
+  margin-left: 3em;
+}

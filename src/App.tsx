@@ -1,52 +1,100 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import "./App.css";
 import { newId } from "./helpers";
-import { withStyles } from "@material-ui/core/styles";
-import { Container } from "@material-ui/core";
+import { TodoList } from "./TodoList";
+import {
+  Container,
+  Button,
+  Paper,
+  Typography,
+  FormGroup,
+} from "@material-ui/core";
+import {
+  todoReducer,
+  ACTION_ADD_ITEM,
+  ACTION_REMOVE_ITEM,
+  ACTION_COMPLETE_TOGGLE,
+  ACTION_PRIORITY_UPDATE,
+  ACTION_EDIT_ITEM,
+} from "./todoReducer";
 
-function App({ classes }: any) {
-  const ACTION_ADD_ITEM = "ADD_ITEM";
+function App() {
+  const [edit, setEdit] = useState(false);
+  const [priority, setPriority] = useState(1);
 
-  const reducer = (state: any, action: any) => {
-    switch (action.type) {
-      case ACTION_ADD_ITEM:
-        return Object.assign({}, state, {
-          items: [...state.items, action.item],
-        });
-      default:
-        return state;
-    }
-  };
-
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, dispatch] = useReducer(todoReducer, {
     items: [],
   });
 
+  const { items } = state;
+
+  //priority sorter
+  const itemsPrioritySort = () => {
+    return items.sort((a: any, b: any) => a.priority - b.priority);
+  };
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    setPriority(priority + 1);
     const item = {
       id: newId(),
-      text: e.target.item.value,
+      priority: priority,
+      text: e.target.elements[0].value,
       completed: false,
     };
     dispatch({ type: ACTION_ADD_ITEM, item });
-    e.target.item.value = "";
+    e.target.elements[0].value = "";
   };
 
   return (
     <Container>
-      <ul>
-        {state.items.map((item: any) => (
-          <li key={item.id}>{item.text}</li>
-        ))}
-      </ul>
-      <form onSubmit={handleSubmit} method="post">
-        <input name="item" type="text" />
-        <input type="submit" value="Add an Item" />
-      </form>
+      <Paper>
+        <Typography variant="h4">Todo List</Typography>
+        <FormGroup>
+          <ol>
+            {/* renders TODOs into separate ordered list component */}
+            {itemsPrioritySort().map((item: any) => (
+              <li key={item.id}>
+                <TodoList
+                  edit={edit}
+                  setEdit={setEdit}
+                  item={item}
+                  priorityDispatch={(priority: any) =>
+                    dispatch({
+                      type: ACTION_PRIORITY_UPDATE,
+                      item,
+                      priorityTodo: priority,
+                    })
+                  }
+                  editDispatch={(editedTodo: any) =>
+                    dispatch({ type: ACTION_EDIT_ITEM, item, editedTodo })
+                  }
+                  checkCheckbox={() =>
+                    dispatch({ type: ACTION_COMPLETE_TOGGLE, item })
+                  }
+                  removeDispatch={() =>
+                    dispatch({ type: ACTION_REMOVE_ITEM, item })
+                  }
+                />
+              </li>
+            ))}
+          </ol>
+          <form onSubmit={handleSubmit} method="post">
+            <input name="item" type="text" />
+            <Button
+              type="submit"
+              value="submit"
+              color="primary"
+              size="small"
+              variant="contained"
+            >
+              Add an Item
+            </Button>
+          </form>
+        </FormGroup>
+      </Paper>
     </Container>
   );
 }
 
-const styles = {};
-export default withStyles(styles)(App);
+export default App;
